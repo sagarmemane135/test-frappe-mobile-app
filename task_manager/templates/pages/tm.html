@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#2490ef">
+<meta name="theme-color" content="#ffffff">
 <link rel="manifest" href="/assets/task_manager/manifest.json">
 <link rel="apple-touch-icon" href="/assets/task_manager/images/icon-192x192.png">
 
@@ -20,277 +20,615 @@
     
     body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #f5f6fa;
+        color: #2c3e50;
+        padding-bottom: 70px;
+    }
+    
+    /* Login Screen */
+    .login-container {
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
         padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
     
-    .pwa-container {
-        max-width: 500px;
-        width: 100%;
-        text-align: center;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 40px 30px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    .app-icon {
-        width: 120px;
-        height: 120px;
+    .login-box {
         background: white;
-        border-radius: 25px;
-        margin: 0 auto 30px;
+        border-radius: 15px;
+        padding: 40px 30px;
+        max-width: 400px;
+        width: 100%;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+    
+    .login-box h2 {
+        margin-bottom: 10px;
+        color: #2c3e50;
+    }
+    
+    .login-box p {
+        color: #7f8c8d;
+        margin-bottom: 30px;
+    }
+    
+    .login-box .btn {
+        width: 100%;
+        padding: 15px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+    }
+    
+    /* Mobile App Interface */
+    .app-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #f5f6fa;
+        min-height: 100vh;
+    }
+    
+    /* Header */
+    .app-header {
+        background: white;
+        padding: 15px 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    
+    .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .user-info h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+    
+    .user-info p {
+        font-size: 13px;
+        color: #7f8c8d;
+        margin-top: 2px;
+    }
+    
+    .header-actions {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .icon-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: none;
+        background: #f5f6fa;
+        color: #2c3e50;
+        cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 60px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-    
-    h1 {
-        font-size: 32px;
-        margin-bottom: 10px;
-        font-weight: 700;
-    }
-    
-    .subtitle {
         font-size: 16px;
-        margin-bottom: 30px;
-        opacity: 0.9;
     }
     
-    .features {
-        margin: 30px 0;
-        text-align: left;
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        padding: 0 20px;
+        margin: 20px 0;
     }
     
-    .feature {
-        display: flex;
-        align-items: center;
-        margin: 15px 0;
-        font-size: 15px;
-    }
-    
-    .feature-icon {
-        font-size: 24px;
-        margin-right: 15px;
-        min-width: 30px;
-    }
-    
-    .btn {
-        display: inline-block;
-        padding: 15px 40px;
+    .stat-card {
         background: white;
-        color: #667eea;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 16px;
-        margin: 10px 5px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        transition: transform 0.2s, box-shadow 0.2s;
-        cursor: pointer;
-        border: none;
+        border-radius: 12px;
+        padding: 15px 10px;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
     
-    .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    .stat-number {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 5px;
     }
     
-    .btn-install {
-        background: #4ecb73;
-        color: white;
-        display: none;
+    .stat-label {
+        font-size: 11px;
+        color: #7f8c8d;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
-    .btn-install.show {
-        display: inline-block;
+    /* Section */
+    .section {
+        padding: 0 20px;
+        margin: 25px 0;
     }
     
-    .install-steps {
-        margin-top: 30px;
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 15px;
-        text-align: left;
-        font-size: 14px;
-        line-height: 1.6;
-    }
-    
-    .install-steps h3 {
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin-bottom: 15px;
-        font-size: 18px;
     }
     
-    .install-steps ol {
-        margin-left: 20px;
+    .section-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #2c3e50;
     }
     
-    .install-steps li {
-        margin: 8px 0;
+    .section-link {
+        font-size: 13px;
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
     }
     
-    @media (max-width: 600px) {
-        .pwa-container {
-            padding: 30px 20px;
-        }
-        
-        h1 {
-            font-size: 28px;
-        }
-        
-        .app-icon {
-            width: 100px;
-            height: 100px;
-            font-size: 50px;
-        }
+    /* Quick Actions */
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .action-btn {
+        background: white;
+        border: 2px solid #e8e9ed;
+        border-radius: 12px;
+        padding: 20px 15px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        color: #2c3e50;
+    }
+    
+    .action-btn:active {
+        transform: scale(0.97);
+    }
+    
+    .action-icon {
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+    
+    .action-text {
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    /* Task List */
+    .task-list {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    
+    .task-item {
+        padding: 15px 20px;
+        border-bottom: 1px solid #f0f1f5;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        text-decoration: none;
+        color: #2c3e50;
+        cursor: pointer;
+    }
+    
+    .task-item:last-child {
+        border-bottom: none;
+    }
+    
+    .task-checkbox {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #d1d5db;
+        border-radius: 6px;
+        flex-shrink: 0;
+        margin-top: 2px;
+        position: relative;
+    }
+    
+    .task-checkbox.checked {
+        background: #10b981;
+        border-color: #10b981;
+    }
+    
+    .task-checkbox.checked::after {
+        content: "✓";
+        color: white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 12px;
+    }
+    
+    .task-content {
+        flex: 1;
+    }
+    
+    .task-title {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 5px;
+        color: #2c3e50;
+    }
+    
+    .task-meta {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    
+    .task-badge {
+        font-size: 11px;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-weight: 500;
+    }
+    
+    .badge-priority-High,
+    .badge-priority-Urgent {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+    
+    .badge-priority-Medium {
+        background: #fef3c7;
+        color: #d97706;
+    }
+    
+    .badge-priority-Low {
+        background: #dbeafe;
+        color: #2563eb;
+    }
+    
+    .badge-status-Open {
+        background: #e0e7ff;
+        color: #4f46e5;
+    }
+    
+    .badge-status-Working {
+        background: #fef3c7;
+        color: #d97706;
+    }
+    
+    .badge-status-Completed {
+        background: #d1fae5;
+        color: #059669;
+    }
+    
+    .task-project {
+        font-size: 12px;
+        color: #7f8c8d;
+    }
+    
+    /* Projects */
+    .project-list {
+        display: grid;
+        gap: 12px;
+    }
+    
+    .project-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        text-decoration: none;
+        color: #2c3e50;
+    }
+    
+    .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 12px;
+    }
+    
+    .project-name {
+        font-size: 15px;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+    
+    .project-progress {
+        margin-top: 10px;
+    }
+    
+    .progress-bar {
+        height: 6px;
+        background: #e8e9ed;
+        border-radius: 3px;
+        overflow: hidden;
+        margin-bottom: 5px;
+    }
+    
+    .progress-fill {
+        height: 100%;
+        background: #667eea;
+        transition: width 0.3s;
+    }
+    
+    .progress-text {
+        font-size: 12px;
+        color: #7f8c8d;
+    }
+    
+    /* Bottom Nav */
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-top: 1px solid #e8e9ed;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        padding: 10px 0 8px;
+        z-index: 100;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        text-decoration: none;
+        color: #7f8c8d;
+        font-size: 12px;
+        padding: 5px;
+    }
+    
+    .nav-item.active {
+        color: #667eea;
+    }
+    
+    .nav-icon {
+        font-size: 22px;
+    }
+    
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: #7f8c8d;
+    }
+    
+    .empty-icon {
+        font-size: 48px;
+        margin-bottom: 15px;
+        opacity: 0.5;
+    }
+    
+    /* FAB */
+    .fab {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: #667eea;
+        color: white;
+        border: none;
+        font-size: 24px;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        cursor: pointer;
+        z-index: 99;
+    }
+    
+    .fab:active {
+        transform: scale(0.95);
     }
 </style>
 {% endblock %}
 
 {% block page_content %}
-<div class="pwa-container">
-    <div class="app-icon">
-        ✓
+{% if is_guest %}
+<!-- Login Screen -->
+<div class="login-container">
+    <div class="login-box">
+        <h2>Task Manager</h2>
+        <p>Mobile-friendly task management</p>
+        <a href="/login?redirect-to=/tm" class="btn">Login to Continue</a>
+    </div>
+</div>
+{% else %}
+<!-- Mobile App Interface -->
+<div class="app-container">
+    <!-- Header -->
+    <div class="app-header">
+        <div class="header-top">
+            <div class="user-info">
+                <h3>Hello, {{ user_fullname }}</h3>
+                <p>Here's your task overview</p>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="window.location.href='/app'">⚙️</button>
+                <button class="icon-btn" onclick="confirmLogout()">🚪</button>
+            </div>
+        </div>
     </div>
     
-    <h1>{{ app_name }}</h1>
-    <p class="subtitle">{{ app_description }}</p>
-    
-    <div class="features">
-        <div class="feature">
-            <span class="feature-icon">📱</span>
-            <span>Install as mobile app</span>
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">{{ task_stats.total }}</div>
+            <div class="stat-label">Total</div>
         </div>
-        <div class="feature">
-            <span class="feature-icon">📴</span>
-            <span>Works offline</span>
+        <div class="stat-card">
+            <div class="stat-number">{{ task_stats.open }}</div>
+            <div class="stat-label">Open</div>
         </div>
-        <div class="feature">
-            <span class="feature-icon">⚡</span>
-            <span>Fast & lightweight</span>
+        <div class="stat-card">
+            <div class="stat-number">{{ task_stats.working }}</div>
+            <div class="stat-label">Active</div>
         </div>
-        <div class="feature">
-            <span class="feature-icon">🔔</span>
-            <span>Push notifications</span>
+        <div class="stat-card">
+            <div class="stat-number">{{ task_stats.completed }}</div>
+            <div class="stat-label">Done</div>
         </div>
     </div>
     
-    <button class="btn btn-install" id="installBtn">
-        📲 Install App
-    </button>
+    <!-- Quick Actions -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">Quick Actions</div>
+        </div>
+        <div class="quick-actions">
+            <a href="/app/task/new" class="action-btn">
+                <div class="action-icon">✚</div>
+                <div class="action-text">New Task</div>
+            </a>
+            <a href="/app/project/new" class="action-btn">
+                <div class="action-icon">📁</div>
+                <div class="action-text">New Project</div>
+            </a>
+            <a href="/app/task?status=Open" class="action-btn">
+                <div class="action-icon">📋</div>
+                <div class="action-text">Open Tasks</div>
+            </a>
+            <a href="/app/customer/new" class="action-btn">
+                <div class="action-icon">👤</div>
+                <div class="action-text">New Customer</div>
+            </a>
+        </div>
+    </div>
     
-    <a href="/login" class="btn">
-        🚀 Launch App
-    </a>
+    <!-- My Tasks -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">My Tasks</div>
+            <a href="/app/task" class="section-link">View All →</a>
+        </div>
+        <div class="task-list">
+            {% if my_tasks %}
+                {% for task in my_tasks %}
+                <a href="/app/task/{{ task.name }}" class="task-item">
+                    <div class="task-checkbox {% if task.status == 'Completed' %}checked{% endif %}"></div>
+                    <div class="task-content">
+                        <div class="task-title">{{ task.subject }}</div>
+                        <div class="task-meta">
+                            <span class="task-badge badge-status-{{ task.status }}">{{ task.status }}</span>
+                            <span class="task-badge badge-priority-{{ task.priority }}">{{ task.priority }}</span>
+                            {% if task.project %}
+                            <span class="task-project">📁 {{ task.project }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">📝</div>
+                    <p>No tasks assigned yet</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
     
-    <div class="install-steps" id="installSteps" style="display: none;">
-        <h3>📲 How to Install</h3>
-        <div id="installInstructions"></div>
+    <!-- My Projects -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">My Projects</div>
+            <a href="/app/project" class="section-link">View All →</a>
+        </div>
+        <div class="project-list">
+            {% if projects %}
+                {% for project in projects %}
+                <a href="/app/project/{{ project.name }}" class="project-card">
+                    <div class="project-header">
+                        <div class="project-name">{{ project.project_name }}</div>
+                        <span class="task-badge badge-status-{{ project.status }}">{{ project.status }}</span>
+                    </div>
+                    <div class="project-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{ project.percent_complete }}%"></div>
+                        </div>
+                        <div class="progress-text">{{ project.percent_complete }}% Complete</div>
+                    </div>
+                </a>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">📁</div>
+                    <p>No projects available</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- FAB -->
+    <button class="fab" onclick="window.location.href='/app/task/new'">+</button>
+    
+    <!-- Bottom Nav -->
+    <div class="bottom-nav">
+        <a href="/tm" class="nav-item active">
+            <div class="nav-icon">🏠</div>
+            <div>Home</div>
+        </a>
+        <a href="/app/task" class="nav-item">
+            <div class="nav-icon">✓</div>
+            <div>Tasks</div>
+        </a>
+        <a href="/app/project" class="nav-item">
+            <div class="nav-icon">📁</div>
+            <div>Projects</div>
+        </a>
+        <a href="/app" class="nav-item">
+            <div class="nav-icon">⚙️</div>
+            <div>More</div>
+        </a>
     </div>
 </div>
 
 <script>
+    function confirmLogout() {
+        if (confirm('Are you sure you want to logout?')) {
+            window.location.href = '/api/method/logout';
+        }
+    }
+    
     // Register service worker
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/assets/task_manager/js/service-worker.js')
-            .then(reg => console.log('Service Worker registered:', reg.scope))
+            .then(reg => console.log('Service Worker registered'))
             .catch(err => console.log('Service Worker registration failed:', err));
     }
     
-    // PWA Install functionality
-    let deferredPrompt;
-    const installBtn = document.getElementById('installBtn');
-    const installSteps = document.getElementById('installSteps');
-    const installInstructions = document.getElementById('installInstructions');
-    
-    // Detect platform and show appropriate instructions
-    function detectPlatform() {
-        const userAgent = navigator.userAgent.toLowerCase();
-        const isIOS = /iphone|ipad|ipod/.test(userAgent);
-        const isAndroid = /android/.test(userAgent);
-        const isChrome = /chrome/.test(userAgent);
-        const isSafari = /safari/.test(userAgent) && !isChrome;
-        
-        if (isIOS && isSafari) {
-            showIOSInstructions();
-        } else if (isAndroid) {
-            // Android will show install button if beforeinstallprompt fires
-        } else {
-            showDesktopInstructions();
-        }
-    }
-    
-    function showIOSInstructions() {
-        installSteps.style.display = 'block';
-        installInstructions.innerHTML = `
-            <ol>
-                <li>Tap the Share button <span style="font-size: 18px;">□↑</span></li>
-                <li>Scroll down and tap "Add to Home Screen"</li>
-                <li>Tap "Add" in the top right</li>
-                <li>Find the app icon on your home screen!</li>
-            </ol>
-        `;
-    }
-    
-    function showDesktopInstructions() {
-        installSteps.style.display = 'block';
-        installInstructions.innerHTML = `
-            <ol>
-                <li>Look for the install icon (⊕) in the address bar</li>
-                <li>Click it and select "Install"</li>
-                <li>The app will open in its own window</li>
-            </ol>
-        `;
-    }
-    
-    // Handle beforeinstallprompt event (Chrome/Edge/Android)
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        installBtn.classList.add('show');
+    // Pull to refresh
+    let startY = 0;
+    document.addEventListener('touchstart', e => {
+        startY = e.touches[0].pageY;
     });
     
-    installBtn.addEventListener('click', async () => {
-        if (!deferredPrompt) {
-            detectPlatform();
-            return;
-        }
-        
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log(`User response: ${outcome}`);
-        
-        if (outcome === 'accepted') {
-            installBtn.style.display = 'none';
-        }
-        
-        deferredPrompt = null;
-    });
-    
-    // Handle successful installation
-    window.addEventListener('appinstalled', () => {
-        console.log('PWA installed successfully');
-        installBtn.style.display = 'none';
-        installSteps.style.display = 'none';
-    });
-    
-    // Check if already installed
-    window.addEventListener('load', () => {
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            // Already installed, redirect to app
-            window.location.href = '/app';
-        } else {
-            detectPlatform();
+    document.addEventListener('touchend', e => {
+        const endY = e.changedTouches[0].pageY;
+        if (endY - startY > 100 && window.scrollY === 0) {
+            location.reload();
         }
     });
 </script>
+{% endif %}
 {% endblock %}
