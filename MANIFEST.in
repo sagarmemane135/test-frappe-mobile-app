@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include task_manager *.css
+recursive-include task_manager *.csv
+recursive-include task_manager *.html
+recursive-include task_manager *.ico
+recursive-include task_manager *.js
+recursive-include task_manager *.json
+recursive-include task_manager *.md
+recursive-include task_manager *.png
+recursive-include task_manager *.py
+recursive-include task_manager *.svg
+recursive-include task_manager *.txt
+recursive-exclude task_manager *.pyc
