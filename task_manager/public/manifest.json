@@ -2,7 +2,7 @@
   "name": "Task Manager",
   "short_name": "TaskMgr",
   "description": "Mobile-friendly task management app",
-  "start_url": "/app",
+  "start_url": "/tm",
   "scope": "/",
   "display": "standalone",
   "orientation": "any",

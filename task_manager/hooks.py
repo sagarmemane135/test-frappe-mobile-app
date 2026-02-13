@@ -208,7 +208,7 @@ pwa_manifest = {
     "background_color": "#ffffff",
     "display": "standalone",
     "scope": "/",
-    "start_url": "/app",
+    "start_url": "/tm",
     "orientation": "any",
     "icons": [
         {

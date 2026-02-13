@@ -1,0 +1,296 @@
+{% extends "templates/web.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block head_include %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#2490ef">
+<link rel="manifest" href="/assets/task_manager/manifest.json">
+<link rel="apple-touch-icon" href="/assets/task_manager/images/icon-192x192.png">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        padding: 20px;
+    }
+    
+    .pwa-container {
+        max-width: 500px;
+        width: 100%;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 40px 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .app-icon {
+        width: 120px;
+        height: 120px;
+        background: white;
+        border-radius: 25px;
+        margin: 0 auto 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 60px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    h1 {
+        font-size: 32px;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+    
+    .subtitle {
+        font-size: 16px;
+        margin-bottom: 30px;
+        opacity: 0.9;
+    }
+    
+    .features {
+        margin: 30px 0;
+        text-align: left;
+    }
+    
+    .feature {
+        display: flex;
+        align-items: center;
+        margin: 15px 0;
+        font-size: 15px;
+    }
+    
+    .feature-icon {
+        font-size: 24px;
+        margin-right: 15px;
+        min-width: 30px;
+    }
+    
+    .btn {
+        display: inline-block;
+        padding: 15px 40px;
+        background: white;
+        color: #667eea;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 16px;
+        margin: 10px 5px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+        border: none;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn-install {
+        background: #4ecb73;
+        color: white;
+        display: none;
+    }
+    
+    .btn-install.show {
+        display: inline-block;
+    }
+    
+    .install-steps {
+        margin-top: 30px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        text-align: left;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    
+    .install-steps h3 {
+        margin-bottom: 15px;
+        font-size: 18px;
+    }
+    
+    .install-steps ol {
+        margin-left: 20px;
+    }
+    
+    .install-steps li {
+        margin: 8px 0;
+    }
+    
+    @media (max-width: 600px) {
+        .pwa-container {
+            padding: 30px 20px;
+        }
+        
+        h1 {
+            font-size: 28px;
+        }
+        
+        .app-icon {
+            width: 100px;
+            height: 100px;
+            font-size: 50px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block page_content %}
+<div class="pwa-container">
+    <div class="app-icon">
+        ✓
+    </div>
+    
+    <h1>{{ app_name }}</h1>
+    <p class="subtitle">{{ app_description }}</p>
+    
+    <div class="features">
+        <div class="feature">
+            <span class="feature-icon">📱</span>
+            <span>Install as mobile app</span>
+        </div>
+        <div class="feature">
+            <span class="feature-icon">📴</span>
+            <span>Works offline</span>
+        </div>
+        <div class="feature">
+            <span class="feature-icon">⚡</span>
+            <span>Fast & lightweight</span>
+        </div>
+        <div class="feature">
+            <span class="feature-icon">🔔</span>
+            <span>Push notifications</span>
+        </div>
+    </div>
+    
+    <button class="btn btn-install" id="installBtn">
+        📲 Install App
+    </button>
+    
+    <a href="/login" class="btn">
+        🚀 Launch App
+    </a>
+    
+    <div class="install-steps" id="installSteps" style="display: none;">
+        <h3>📲 How to Install</h3>
+        <div id="installInstructions"></div>
+    </div>
+</div>
+
+<script>
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/assets/task_manager/js/service-worker.js')
+            .then(reg => console.log('Service Worker registered:', reg.scope))
+            .catch(err => console.log('Service Worker registration failed:', err));
+    }
+    
+    // PWA Install functionality
+    let deferredPrompt;
+    const installBtn = document.getElementById('installBtn');
+    const installSteps = document.getElementById('installSteps');
+    const installInstructions = document.getElementById('installInstructions');
+    
+    // Detect platform and show appropriate instructions
+    function detectPlatform() {
+        const userAgent = navigator.userAgent.toLowerCase();
+        const isIOS = /iphone|ipad|ipod/.test(userAgent);
+        const isAndroid = /android/.test(userAgent);
+        const isChrome = /chrome/.test(userAgent);
+        const isSafari = /safari/.test(userAgent) && !isChrome;
+        
+        if (isIOS && isSafari) {
+            showIOSInstructions();
+        } else if (isAndroid) {
+            // Android will show install button if beforeinstallprompt fires
+        } else {
+            showDesktopInstructions();
+        }
+    }
+    
+    function showIOSInstructions() {
+        installSteps.style.display = 'block';
+        installInstructions.innerHTML = `
+            <ol>
+                <li>Tap the Share button <span style="font-size: 18px;">□↑</span></li>
+                <li>Scroll down and tap "Add to Home Screen"</li>
+                <li>Tap "Add" in the top right</li>
+                <li>Find the app icon on your home screen!</li>
+            </ol>
+        `;
+    }
+    
+    function showDesktopInstructions() {
+        installSteps.style.display = 'block';
+        installInstructions.innerHTML = `
+            <ol>
+                <li>Look for the install icon (⊕) in the address bar</li>
+                <li>Click it and select "Install"</li>
+                <li>The app will open in its own window</li>
+            </ol>
+        `;
+    }
+    
+    // Handle beforeinstallprompt event (Chrome/Edge/Android)
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBtn.classList.add('show');
+    });
+    
+    installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) {
+            detectPlatform();
+            return;
+        }
+        
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response: ${outcome}`);
+        
+        if (outcome === 'accepted') {
+            installBtn.style.display = 'none';
+        }
+        
+        deferredPrompt = null;
+    });
+    
+    // Handle successful installation
+    window.addEventListener('appinstalled', () => {
+        console.log('PWA installed successfully');
+        installBtn.style.display = 'none';
+        installSteps.style.display = 'none';
+    });
+    
+    // Check if already installed
+    window.addEventListener('load', () => {
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            // Already installed, redirect to app
+            window.location.href = '/app';
+        } else {
+            detectPlatform();
+        }
+    });
+</script>
+{% endblock %}
